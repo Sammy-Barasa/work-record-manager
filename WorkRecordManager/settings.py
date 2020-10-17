@@ -28,7 +28,6 @@ SECRET_KEY = '5=3f$e%41o6d%m!e$3e&s%=$#_$x63u^lh_rznjz7nw05vn@)#'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',
     "http://localhost:3000/",
     os.environ.get('ALLOWED_HOSTS'),
 ]
