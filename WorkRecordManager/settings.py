@@ -207,5 +207,6 @@ django-cors-headers
 djangorestframework-simplejwt
 drf-yasg
 postgres
+gunicorn
 
 '''
