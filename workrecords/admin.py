@@ -9,7 +9,7 @@ class WorkRecordAdmin(admin.ModelAdmin):
 
 
 class RecordOfWorkAdmin(admin.ModelAdmin):
-    list_display = ['user','work']
+    list_display = ['work']
 
 
 class PersonChoisesAdmin(admin.ModelAdmin):

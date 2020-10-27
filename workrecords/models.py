@@ -12,6 +12,7 @@ PERSON_CHOICES=[
 User= get_user_model()
 # type choices to be personalised
 class Work(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title=models.CharField(max_length=200)
     person=models.CharField(max_length=100,choices=PERSON_CHOICES)
     type_of_work =models.CharField(default="Writing",
@@ -26,13 +27,12 @@ class Work(models.Model):
     paid=models.BooleanField(default=False)
     
     def __str__(self):
-        return f"{self.date} - {self.title},{self.type_of_work} by {self.person} - {self.pages} pages, {self.number_of_words} words. Cancelled_status={self.cancelled} Completed_status={self.completed} Payment_Status={self.paid}"
+        return f"{self.user} {self.date} - {self.title},{self.type_of_work} by {self.person} - {self.pages} pages, {self.number_of_words} words. Cancelled_status={self.cancelled} Completed_status={self.completed} Payment_Status={self.paid}"
     
 class RecordOfWork(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
     work=models.ForeignKey(Work,on_delete=models.CASCADE)
     def __str__(self):
-        return f"{self.user}-{self.work}"
+        return f"{self.work}"
 class PersonChoises(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
