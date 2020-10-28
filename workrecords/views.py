@@ -49,9 +49,13 @@ class WorkDetailView(generics.GenericAPIView):
         return Work.objects.get(id=id)
 
     def get(self, request, work_id):
-        serializer = self.serializer_class(self.get_queryset())
-        message = f"work {work_id} detail"
-        return Response({"message": message, "data": serializer.data}, status=status.HTTP_200_OK)
+        try:
+            serializer = self.serializer_class(self.get_queryset())
+            message = f"work {work_id} detail"
+            return Response({"message": message, "data": serializer.data}, status=status.HTTP_200_OK)
+        except serializer.errors as error:
+            return Response({"message": error, "data": serializer.data}, status=status.HTTP_404_OK)
+        
 
 
 class UpdateWorkView(generics.RetrieveUpdateDestroyAPIView):
