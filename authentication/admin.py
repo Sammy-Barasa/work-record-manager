@@ -4,8 +4,8 @@ from authentication.models import User
 
 
 class UserAdmin(BaseUserAdmin):
-    list_display = ('email', 'username', 'is_staff')
-    list_filter = ('is_staff',)
+    list_display = ('email', 'username', 'is_staff',
+                    'is_verified', 'created_at')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Permissions', {'fields': ('is_admin', 'is_staff')}),
