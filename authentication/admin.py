@@ -7,8 +7,13 @@ class UserAdmin(BaseUserAdmin):
     list_display = ('email', 'username', 'is_staff',
                     'is_verified', 'created_at')
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
-        ('Permissions', {'fields': ('is_admin', 'is_staff')}),
+        (None, {
+            'fields': ('email', 'password')
+            }),
+        ('Advanced options', {
+            'classes': ('collapse',),
+            'fields': (),
+        }),
     )
 
     search_fields = ('email',)
