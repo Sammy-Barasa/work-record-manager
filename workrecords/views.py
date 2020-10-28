@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import generics, status
 from workrecords.models import Work
 from django.contrib.auth import get_user_model
-from workrecords.serializers import WorkSerializer
+from workrecords.serializers import WorkSerializer, UpdateWorkSerializer
 # Create your views here.
 
 # create ,get work API viw
@@ -29,13 +29,65 @@ class UserWorksView(generics.GenericAPIView):
     # create work for user
     def post(self, request,user_id):
         data = request.data
-        serializer = self.serializer_class(data=data,user_id=user_id)
+        print(request.user)
+        serializer = self.serializer_class(data=data,context={'user_id': user_id})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         print(serializer.data)
         return Response({"message": "work has been added"}, status=status.HTTP_201_CREATED)
-# update work
-# delete work APIView
+
+
+class WorkDetailView(generics.GenericAPIView):
+    serializer_class = WorkSerializer
+    # overriding get queryset
+
+    def get_queryset(self):
+        """
+        returns specific work detail 
+        """
+        id = self.kwargs['work_id']
+        return Work.objects.get(id=id)
+
+    def get(self, request, work_id):
+        serializer = self.serializer_class(self.get_queryset())
+        message = f"work {work_id} detail"
+        return Response({"message": message, "data": serializer.data}, status=status.HTTP_200_OK)
+
+
+class UpdateWorkView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = UpdateWorkSerializer
+    queryset = Work.objects.all()
+    lookup_field = "id"
+
+    # overriding get queryset
+
+    def get_queryset(self):
+        """
+        returns specific work to be updated 
+        """
+        id = self.kwargs['id']
+        print(id)
+        return Work.objects.filter(id=id)
+
+    # update work
+    def patch(self, request, id):
+        data = request.data
+        serializer = self.serializer_class(self.get_queryset(),data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        print(serializer.data)
+        return Response({"message": "work has been updated"}, status=status.HTTP_200_OK)
+
+    # delete work 
+    def delete(self, request, id):
+        work=self.get_queryset()
+        operation=work.delete()
+        if operation:
+            message = f"work {id} has been deleted"
+            return Response({"message": message}, status=status.HTTP_200_OK)
+        return Response({"message": message}, status=status.HTTP_400_BAD_REQUEST)
+
+
 # get personal person options
 # get personal worktype options
 # 

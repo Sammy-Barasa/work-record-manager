@@ -5,18 +5,26 @@ from django.contrib.auth import get_user_model
 class WorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
-        fields = ['id', 'topic', 'person', 'type_of_work', 'pages', 'number_of_words',
+        fields = ['id', 'user', 'topic', 'person', 'type_of_work', 'pages', 'number_of_words',
                   'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid']
         read_only_fields = ['id']
-        # create
+        extra_kwargs = {'user': {'write_only': True}}
         # validate
-        # update
         def validate(self, attr):
             return attr
 
+        # create
         def create(self, validated_data):
-            user_id=self.kwargs['user_id']
-            user=get_user_model().objects.get(pk=user_id)
-            if user is not None:
-                return Work.objects.create(user=user,**validated_data)
-            return {"messge":"you are not a registered user, please register"}
+            work= Work.objects.create(**validated_data)
+            return work
+
+
+class UpdateWorkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Work
+        fields = ['topic', 'person', 'type_of_work', 'pages', 'number_of_words',
+                  'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid']
+        
+    
+
+        
