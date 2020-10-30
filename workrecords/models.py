@@ -7,6 +7,20 @@ from django.contrib.auth import get_user_model
 
 User= get_user_model()
 # type choices to be personalised
+class PersonChoises(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return f"{self.user}-{self.name}"
+    
+class TypeOfWorkChoices(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    work_type = models.CharField(max_length=200)
+
+    def __str__(self):
+        return f"{self.user}-{self.work_type}"
+    
 class Work(models.Model):
     
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -36,15 +50,4 @@ class RecordOfWork(models.Model):
     work=models.ForeignKey(Work,on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.work}"
-class PersonChoises(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
-    name = models.CharField(max_length=200)
 
-    def __str__(self):
-        return f"{self.user}-{self.name}"
-class TypeOfWorkChoices(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    work_type = models.CharField(max_length=200)
-
-    def __str__(self):
-        return f"{self.user}-{self.work_type}"
