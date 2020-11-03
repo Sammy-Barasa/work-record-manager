@@ -197,6 +197,7 @@ CORS_ALLOW_HEADERS = [
 
 CSRF_TRUSTED_ORIGINS = [
     'nutricalc.netlify.app',
+    "http://localhost:3000",
 ]
 
 '''
