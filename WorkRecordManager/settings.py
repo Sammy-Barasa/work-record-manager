@@ -30,6 +30,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "http://localhost:3000/",
+    "https://workrecordmanager.netlify.app",
     os.environ.get("ALLOWED_HOSTS")
 ] 
 
@@ -180,6 +181,7 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 # django-course-header
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "https://workrecordmanager.netlify.app",
 ]
 
 CORS_ALLOW_METHODS = list(default_methods)
@@ -195,7 +197,7 @@ CORS_ALLOW_HEADERS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'nutricalc.netlify.app',
+    'https://workrecordmanager.netlify.app',
     "http://localhost:3000",
 ]
 
