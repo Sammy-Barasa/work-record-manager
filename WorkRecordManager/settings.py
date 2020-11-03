@@ -165,6 +165,7 @@ SWAGGER_SETTINGS = {
             "in": "header"
         },
     },
+}
 
 JWT_SECRET = os.environ.get('JWT_SECRET', '')
 
