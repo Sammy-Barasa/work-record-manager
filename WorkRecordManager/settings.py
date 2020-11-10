@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'authentication',
     'workrecords',
+    'Users',
     'corsheaders',
 ]
 
@@ -159,10 +160,10 @@ REST_FRAMEWORK = {
 
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
-        "Auth Token eg  [Bearer (JWT)]": {
-            "type": "apiKey",
-            "name": "Authorization",
-            "in": "header"
+        'Bearer': {
+                'type': 'apiKey',
+                'name': 'Authorization',
+                'in': 'header'
         },
     },
 }
