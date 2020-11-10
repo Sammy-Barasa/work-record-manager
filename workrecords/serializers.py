@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from workrecords.models import Work
+from workrecords.models import Work, RecordOfWork
 from django.contrib.auth import get_user_model
 
 class WorkSerializer(serializers.ModelSerializer):
@@ -16,6 +16,7 @@ class WorkSerializer(serializers.ModelSerializer):
         # create
         def create(self, validated_data):
             work= Work.objects.create(**validated_data)
+            record = RecordOfWork.objects.create(work=work)
             return work
 
 
