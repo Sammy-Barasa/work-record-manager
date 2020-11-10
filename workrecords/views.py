@@ -70,7 +70,7 @@ class UpdateWorkView(generics.RetrieveUpdateDestroyAPIView):
         operation=work.delete()
         if operation:
             message = f"work {work_id} has been deleted"
-            return Response({"message": message}, status=status.HTTP_200_OK)
+            return Response({"messages": message}, status=status.HTTP_200_OK)
         return Response({"message": message}, status=status.HTTP_400_BAD_REQUEST)
 
 
