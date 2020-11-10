@@ -33,8 +33,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 class UpdateWorkView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UpdateWorkSerializer
-    queryset = Work.objects.all()
-    lookup_field = "id"
+    lookup_field = "work_id"
 
     # overriding get queryset
 
@@ -44,7 +43,8 @@ class UpdateWorkView(generics.RetrieveUpdateDestroyAPIView):
         """
         id = self.kwargs['work_id']
         print(id)
-        return Work.objects.filter(id=id)
+        queryset = Work.objects.get(id=id)
+        return queryset
 
     # get work detail
     def get(self, request, work_id):
@@ -57,6 +57,7 @@ class UpdateWorkView(generics.RetrieveUpdateDestroyAPIView):
 
     # update work
     def patch(self, request, work_id):
+        print(work_id)
         data = request.data
         serializer = self.serializer_class(self.get_queryset(),data=data)
         serializer.is_valid(raise_exception=True)
@@ -70,7 +71,7 @@ class UpdateWorkView(generics.RetrieveUpdateDestroyAPIView):
         operation=work.delete()
         if operation:
             message = f"work {work_id} has been deleted"
-            return Response({"messages": message}, status=status.HTTP_200_OK)
+            return Response({"message": message}, status=status.HTTP_200_OK)
         return Response({"message": message}, status=status.HTTP_400_BAD_REQUEST)
 
 

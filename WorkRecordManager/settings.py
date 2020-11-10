@@ -211,7 +211,7 @@ CORS_ALLOW_HEADERS = [
 
 CSRF_TRUSTED_ORIGINS = [
     'workrecordmanager.netlify.app',
-    "localhost:3000",
+    'localhost:3000',
 ]
 
 '''
