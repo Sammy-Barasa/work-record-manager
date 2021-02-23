@@ -1,8 +1,10 @@
 from django.urls.conf import path
-from workrecords.views import  UpdateWorkView
+from workrecords.views import  UpdateWorkView, GetWorkView
 
 urlpatterns = [
     path("<int:work_id>/", UpdateWorkView.as_view(),
          name="work_rud_endpoint"),
+    path("", GetWorkView.as_view(),
+         name="work_endpoint"),
     
 ]

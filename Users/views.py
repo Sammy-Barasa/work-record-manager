@@ -23,7 +23,7 @@ class UserWorksView(generics.GenericAPIView):
     
     def get(self,request,user_id):
         serializer = self.serializer_class(self.get_queryset(), many=True)
-        return Response({"message":"get method working","data":serializer.data}, status=status.HTTP_200_OK)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
     # create work for user
@@ -34,4 +34,4 @@ class UserWorksView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         print(serializer.data)
-        return Response({"message": "work has been added"}, status=status.HTTP_201_CREATED)
+        return Response(data={"message": "work has been added"}, status=status.HTTP_201_CREATED)
