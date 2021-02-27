@@ -36,6 +36,7 @@ class Work(models.Model):
     completed = models.BooleanField(default=True)
     amount_received = models.IntegerField(null=True, default=0, blank=True)
     paid=models.BooleanField(default=False)
+    order_number = models.CharField(default="#00000",max_length=200)
 
     def get_choices(self,id):
         CHOICES = ()
