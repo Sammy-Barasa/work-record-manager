@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 class WorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
-        fields = ['id', 'user', 'topic', 'person', 'type_of_work', 'pages', 'number_of_words',
+        fields = ['id', 'user', 'topic', 'person', 'type_of_work','order_number','pages', 'number_of_words',
                   'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid']
         read_only_fields = ['id']
         extra_kwargs = {'user': {'write_only': True}}
