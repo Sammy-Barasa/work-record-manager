@@ -5,6 +5,7 @@ from workrecords.models import Work
 from django.contrib.auth import get_user_model
 from workrecords.serializers import UpdateWorkSerializer, WorkSerializer
 from django.core.exceptions import ObjectDoesNotExist
+from rest_framework_simplejwt.authentication import JWTAuthentication
 # Create your views here.
 
 
@@ -31,6 +32,7 @@ from django.core.exceptions import ObjectDoesNotExist
 class GetWorkView(generics.GenericAPIView):
     queryset = Work.objects.all()
     serializer_class = WorkSerializer
+    authentication_classes = (JWTAuthentication,)
     
     def get(self,request,**kwargs):
         serializer= self.serializer_class(self.get_queryset(),many=True)
@@ -38,6 +40,7 @@ class GetWorkView(generics.GenericAPIView):
 
 class UpdateWorkView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UpdateWorkSerializer
+    authentication_classes = (JWTAuthentication,)
     lookup_field = "work_id"
 
     # overriding get queryset
@@ -56,7 +59,7 @@ class UpdateWorkView(generics.RetrieveUpdateDestroyAPIView):
         try:
             serializer = self.serializer_class(self.get_queryset())
             message = f"work {work_id} detail"
-            return Response(data={"message": message, "data": serializer.data}, status=status.HTTP_200_OK)
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
         except ObjectDoesNotExist as error:
             return Response(data={"message": error}, status=status.HTTP_404_OK)
 
