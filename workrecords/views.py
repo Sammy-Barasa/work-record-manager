@@ -5,7 +5,7 @@ from workrecords.models import Work
 from django.contrib.auth import get_user_model
 from workrecords.serializers import UpdateWorkSerializer, WorkSerializer
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 
@@ -30,17 +30,18 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 #         except serializer.errors as error:
 #             return Response({"message": error, "data": serializer.data}, status=status.HTTP_404_OK)
 class GetWorkView(generics.GenericAPIView):
+    permission_classes =(IsAuthenticated,)
     queryset = Work.objects.all()
     serializer_class = WorkSerializer
-    authentication_classes = (JWTAuthentication,)
+    
     
     def get(self,request,**kwargs):
         serializer= self.serializer_class(self.get_queryset(),many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 class UpdateWorkView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated,)
     serializer_class = UpdateWorkSerializer
-    authentication_classes = (JWTAuthentication,)
     lookup_field = "work_id"
 
     # overriding get queryset

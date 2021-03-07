@@ -4,13 +4,14 @@ from rest_framework import generics, status
 from workrecords.models import Work
 from django.contrib.auth import get_user_model
 from workrecords.serializers import WorkSerializer
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 # create ,get work API viw
 class UserWorksView(generics.GenericAPIView):
+    permission_classes = (IsAuthenticated,)
     serializer_class= WorkSerializer
-    authentication_classes = (JWTAuthentication,)
+    
     # overriding get queryset
     def get_queryset(self):
         """
