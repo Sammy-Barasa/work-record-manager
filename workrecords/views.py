@@ -65,7 +65,7 @@ class UpdateWorkView(generics.RetrieveUpdateDestroyAPIView):
             return Response(data={"detail": error}, status=status.HTTP_404_OK)
 
     # update work
-    def put(self, request, work_id):
+    def patch(self, request, work_id):
         print(work_id)
         data = request.data
         serializer = self.serializer_class(self.get_queryset(),data=data)
