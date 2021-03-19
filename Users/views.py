@@ -32,7 +32,7 @@ class UserWorksView(generics.GenericAPIView):
     def post(self, request,user_id):
         data = request.data
         print(request.user)
-        serializer = self.serializer_class(data=data,context={'user_id': user_id})
+        serializer = self.serializer_class(data=data,context={'request': request})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         print(serializer.data)
