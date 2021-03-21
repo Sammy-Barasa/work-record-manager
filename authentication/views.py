@@ -36,7 +36,7 @@ class RegisterView(generics.GenericAPIView):
         # use saved email to send verifying link
         validated_user = User.objects.get(email=user_data['email'])
         # give user a token tto verify email
-        tokens = RefreshToken.for_user(user=validated_user)
+        tokens = validated_user.get_tokens_for_user()
         print(tokens)
         accesstoken = tokens.access_token
         print("access: ", str(accesstoken))
