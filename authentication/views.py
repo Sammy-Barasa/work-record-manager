@@ -79,7 +79,7 @@ class VerifyEmailView(generics.GenericAPIView):
                 # set user is_verified status to True
                 user.is_verified = True
                 user.save()
-                return Response({"message": "user email is successfully verified"}, status=status.HTTP_200_OK)
+                return Response({"message": "user email is successfully verified","Login via":"https://workrecordmanager.netlify.app/login"}, status=status.HTTP_200_OK)
             return Response({"message", "email is already verified"}, status=status.HTTP_200_OK)
         except jwt.exceptions.DecodeError as identifier:
             return Response({"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST)
