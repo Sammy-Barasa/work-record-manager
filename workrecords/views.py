@@ -48,7 +48,7 @@ class UpdateWorkView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         """
-        returns specific work for detail(get),updated(patch),deleting(delete) 
+        returns specific work for detail(get),updated(put),deleting(delete) 
         """
         id = self.kwargs['work_id']
         print(id)
