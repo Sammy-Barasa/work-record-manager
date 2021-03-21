@@ -38,7 +38,7 @@ class RegisterView(generics.GenericAPIView):
         # give user a token tto verify email
         tokens = validated_user.get_tokens_for_user()
         print(tokens)
-        accesstoken = tokens.access_token
+        accesstoken = tokens.access
         print("access: ", str(accesstoken))
         # link to verify API endpoint
         endpoint = reverse('verify_endpoint')
