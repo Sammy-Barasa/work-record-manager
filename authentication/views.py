@@ -1,3 +1,5 @@
+import os
+
 from django.shortcuts import render
 
 # Create your views here.
@@ -68,8 +70,9 @@ class VerifyEmailView(generics.GenericAPIView):
     def get(self, request):
         #  get token and verify it
         tokens = request.GET.get('token')
+        print(tokens)
         try:
-            payload = jwt.decode(tokens, settings.SECRET_KEY)
+            payload = jwt.decode(tokens, os.environ.get("JWT_SECRET"))
             print(payload)
             user = User.objects.get(id=payload['user_id'])
             if not user.is_verified:
