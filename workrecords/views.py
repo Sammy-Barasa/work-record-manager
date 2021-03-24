@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import generics, status
-from workrecords.models import Work
+from workrecords.models import Work,TypeOfWorkChoices
 from django.contrib.auth import get_user_model
-from workrecords.serializers import UpdateWorkSerializer, WorkSerializer
+from workrecords.serializers import UpdateWorkSerializer, WorkSerializer, CategoryOfWorkSerializer
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import ValidationError
 # Create your views here.
 
 
@@ -38,6 +39,24 @@ class GetWorkView(generics.GenericAPIView):
     def get(self,request,**kwargs):
         serializer= self.serializer_class(self.get_queryset(),many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+class GetWorkOptionsView(generics.GenericAPIView):
+    permission_classes = (IsAuthenticated,)
+    queryset = TypeOfWorkChoices.objects.all()
+    serializer_class = CategoryOfWorkSerializer
+
+    def get(self, request, **kwargs):
+        serializer = self.serializer_class(self.get_queryset(), many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+    def post(self, request,**kwargs):
+        serializer = self.get_serializer_class(data=request.data,context={'request':request})
+        serializer.is_valid(raise_exception=True)
+        try:
+            serializer.save()
+            return Response(data={"message":"work category created"}, status=status.HTTP_201_CREATED)
+        except ValidationError as error:
+            return Response(data={"error":error}, status=status.HTTP_400_BAD_REQUEST)
 
 class UpdateWorkView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)

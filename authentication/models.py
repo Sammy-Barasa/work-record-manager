@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
 from rest_framework_simplejwt.tokens import RefreshToken
+
 # Create your models here.
 
 # Custom User model for verify user emails and sending verification links
@@ -50,3 +51,5 @@ class User(AbstractUser):
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         }
+
+    

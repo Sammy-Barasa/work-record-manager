@@ -6,10 +6,13 @@ from django.contrib.auth import get_user_model
 
 
 User= get_user_model()
+
 # type choices to be personalised
 class PersonChoises(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
+    email= models.EmailField(default="person@example.com", max_length=254)
+    phone= models.IntegerField(default="0700500600")
 
     def __str__(self):
         return f"{self.user}-{self.name}"
@@ -30,20 +33,17 @@ class Work(models.Model):
         max_length=100)
     pages=models.IntegerField(default=0)
     number_of_words=models.IntegerField()
-    date=models.DateField(auto_now=True)
+    date=models.DateField(auto_now_add=True,editable=False)
     expected_amount = models.IntegerField(null=True, default=0, blank=True)
     cancelled=models.BooleanField(default=False)
     completed = models.BooleanField(default=True)
     amount_received = models.IntegerField(null=True, default=0, blank=True)
     paid=models.BooleanField(default=False)
     order_number = models.CharField(default="#00000",max_length=200)
-
-    def get_choices(self,id):
-        CHOICES = ()
-        choices= PersonChoises.objects.get(user=get_user_model().objects.get(pk=id))
-        for choice in choices:
-            CHOICES.append((choice.name,choice.name))
-            return CHOICES   
+    last_modified = models.DateTimeField(auto_now=True)
+    assigned_by = models.ForeignKey(PersonChoises, on_delete=models.CASCADE,default=1)
+    category_of_work= models.ForeignKey(TypeOfWorkChoices, on_delete=models.CASCADE,default=1)
+ 
     def __str__(self):
         return f"{self.user} {self.date} - {self.topic},{self.type_of_work} by {self.person} - {self.pages} pages, {self.number_of_words} words. Cancelled_status={self.cancelled} Completed_status={self.completed} Payment_Status={self.paid}"
     
