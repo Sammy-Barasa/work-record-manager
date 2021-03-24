@@ -5,10 +5,14 @@ from django.contrib.auth import get_user_model
 class WorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
-        fields = ['id','topic', 'assigned_by', 'category_of_work','order_number','pages', 'number_of_words',
+        fields = ['id','user','topic', 'assigned_by', 'category_of_work','order_number','pages', 'number_of_words',
                   'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid','last_modified']
         read_only_fields = ['id','last_modified']
-        # extra_kwargs = {'user': {'write_only': True}}
+        extra_kwargs = {
+            'user': {'write_only': True},
+            'assigned_by': {'write_only': True},
+            'category_of_work': {'write_only': True},
+            }
         depth = 1
         # validate
         def validate(self, attr):
