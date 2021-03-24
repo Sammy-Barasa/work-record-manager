@@ -6,8 +6,8 @@ class WorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
         fields = ['id','topic', 'assigned_by', 'category_of_work','order_number','pages', 'number_of_words',
-                  'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid']
-        read_only_fields = ['id']
+                  'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid','last_modified']
+        read_only_fields = ['id','last_modified']
         # extra_kwargs = {'user': {'write_only': True}}
         depth = 1
         # validate
@@ -43,9 +43,9 @@ class CategoryOfWorkSerializer(serializers.ModelSerializer):
         model = TypeOfWorkChoices
         fields = ['id','user','work_type']
         read_only_fields = ['id']
-        # extra_kwargs={
-        #     'user':{'write_only':True},
-        #     }
+        extra_kwargs={
+            'user':{'write_only':True},
+            }
         # validate
 
         def validate(self, attr):

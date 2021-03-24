@@ -62,7 +62,7 @@ class UserPersonView(generics.GenericAPIView):
         return queryset
 
     # get person detail
-    def get(self, request, personchoices_id):
+    def get(self, request, user_id):
         try:
             serializer = self.serializer_class(self.get_queryset().filter(user=request.user),many=True)
             serializer.is_valid(raise_exception=True)
@@ -71,8 +71,8 @@ class UserPersonView(generics.GenericAPIView):
             return Response(data={"detail": error}, status=status.HTTP_404_OK)
     # add person
 
-    def post(self, request, personchoices_id):
-        print(personchoices_id)
+    def post(self, request, user_id):
+        print(user_id)
         data = request.data
         serializer = self.serializer_class(
             self.get_queryset(), data=data, context={'request': request})
@@ -99,7 +99,7 @@ class UserUpdatePersonView(generics.RetrieveUpdateDestroyAPIView):
         return queryset
 
     # get person detail
-    def get(self, request, personchoices_id):
+    def get(self, request, user_id,personchoices_id):
         try:
             serializer = self.serializer_class(self.get_queryset())
             message = f"person {personchoices_id} detail"
@@ -109,7 +109,7 @@ class UserUpdatePersonView(generics.RetrieveUpdateDestroyAPIView):
 
 
     # update person
-    def put(self, request, personchoices_id):
+    def put(self, request, user_id,personchoices_id):
         print(personchoices_id)
         data = request.data
         serializer = self.serializer_class(self.get_queryset(), data=data)
@@ -119,7 +119,7 @@ class UserUpdatePersonView(generics.RetrieveUpdateDestroyAPIView):
         return Response(data={"message": "person has been updated"}, status=status.HTTP_200_OK)
 
     # delete person
-    def delete(self, request, personchoices_id):
+    def delete(self, request, used_id,personchoices_id):
         person = self.get_queryset()
         operation = person.delete()
         if operation:
