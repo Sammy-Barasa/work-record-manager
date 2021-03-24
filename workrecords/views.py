@@ -76,12 +76,10 @@ class UpdateWorkView(generics.RetrieveUpdateDestroyAPIView):
 
     # get work detail
     def get(self, request, work_id):
-        try:
+        
             serializer = self.serializer_class(self.get_queryset())
             message = f"work {work_id} detail"
             return Response(data=serializer.data, status=status.HTTP_200_OK)
-        except ObjectDoesNotExist as error:
-            return Response(data={"detail": error}, status=status.HTTP_404_OK)
 
     # update work
     def put(self, request, work_id):

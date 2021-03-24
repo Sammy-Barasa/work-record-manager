@@ -63,12 +63,10 @@ class UserPersonView(generics.GenericAPIView):
 
     # get person detail
     def get(self, request, user_id):
-        try:
-            serializer = self.serializer_class(self.get_queryset().filter(user=request.user),many=True)
-            serializer.is_valid(raise_exception=True)
-            return Response(data=serializer.data, status=status.HTTP_200_OK)
-        except ObjectDoesNotExist as error:
-            return Response(data={"detail": error}, status=status.HTTP_404_OK)
+        serializer = self.serializer_class(self.get_queryset().filter(user=request.user),many=True)
+        serializer.is_valid(raise_exception=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+        
     # add person
 
     def post(self, request, user_id):
