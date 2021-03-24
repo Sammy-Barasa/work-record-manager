@@ -27,10 +27,10 @@ class WorkSerializer(serializers.ModelSerializer):
 class UpdateWorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
-        fields = ['id', 'assigned_by', 'category_of_work', 'type_of_work', 'order_number', 'pages', 'number_of_words',
+        fields = ['id', 'user','topic', 'date', 'assigned_by', 'category_of_work', 'order_number', 'pages', 'number_of_words',
                   'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid']
         read_only_fields = ['id', 'topic', 'date',
-                             'assigned_by']
+                             'assigned_by','user']
         # validate
 
         def validate(self, attr):
