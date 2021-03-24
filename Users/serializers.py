@@ -35,7 +35,7 @@ class PersonUpdateSerializer(serializers.ModelSerializer):
 
         # create
         def update(self, instance,validated_data):
-            user_id = validated_data.pop('user')
-            person = PersonChoises.objects.create(instance,
-                data=**validated_data)
-            return person
+            instance.name = validated_data.get('name')
+            instance.email = validated_data.get('email')
+            instance.phone = validated_data.get('phone')
+            return instance

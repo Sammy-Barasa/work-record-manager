@@ -4,7 +4,7 @@ from rest_framework import generics, status
 from workrecords.models import Work, PersonChoises
 from django.contrib.auth import get_user_model
 from workrecords.serializers import WorkSerializer, WorkCreateSerializer
-from Users.serializers import PersonSerializer
+from Users.serializers import PersonSerializer, PersonUpdateSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
@@ -88,7 +88,7 @@ class UserPersonView(generics.GenericAPIView):
 
 class UserUpdatePersonView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
-    serializer_class = PersonSerializer
+    serializer_class = PersonUpdateSerializer
     lookup_field = "personchoices_id"
 
     # overriding get queryset
