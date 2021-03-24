@@ -20,3 +20,22 @@ class PersonSerializer(serializers.ModelSerializer):
             person = PersonChoises.objects.create(
                 user=self.context['request'].user, **validated_data)
             return person
+
+
+class PersonUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PersonChoises
+        fields = ['id', 'name', 'email', 'phone']
+        read_only_fields = ['id']
+
+        # validate
+
+        def validate(self, attr):
+            return attr
+
+        # create
+        def update(self, instance,validated_data):
+            user_id = validated_data.pop('user')
+            person = PersonChoises.objects.create(instance,
+                data=**validated_data)
+            return person

@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import generics, status
 from workrecords.models import Work, PersonChoises
 from django.contrib.auth import get_user_model
-from workrecords.serializers import WorkSerializer
+from workrecords.serializers import WorkSerializer, WorkCreateSerializer
 from Users.serializers import PersonSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
@@ -29,6 +29,11 @@ class UserWorksView(generics.GenericAPIView):
     def get(self,request,user_id):
         serializer = self.serializer_class(self.get_queryset(), many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+class UserCreateWorksView(generics.GenericAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = WorkCreateSerializer
 
 
     # create work for user
