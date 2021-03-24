@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 class WorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
-        fields = ['id','user','topic', 'assigned_by', 'category_of_work','order_number','pages', 'number_of_words',
+        fields = ['id','topic', 'assigned_by', 'category_of_work','order_number','pages', 'number_of_words',
                   'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid','last_modified']
         read_only_fields = ['id','last_modified']
         depth = 1
