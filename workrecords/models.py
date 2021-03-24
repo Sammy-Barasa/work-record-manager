@@ -41,8 +41,8 @@ class Work(models.Model):
     paid=models.BooleanField(default=False)
     order_number = models.CharField(default="#00000",max_length=200)
     last_modified = models.DateTimeField(auto_now=True)
-    assigned_by = models.ForeignKey(PersonChoises, on_delete=models.CASCADE,default=1)
-    category_of_work= models.ForeignKey(TypeOfWorkChoices, on_delete=models.CASCADE,default=1)
+    assigned_by = models.ForeignKey(PersonChoises, on_delete=models.CASCADE)
+    category_of_work= models.ForeignKey(TypeOfWorkChoices, on_delete=models.CASCADE)
  
     def __str__(self):
         return f"{self.user} {self.date} - {self.topic},{self.type_of_work} by {self.person} - {self.pages} pages, {self.number_of_words} words. Cancelled_status={self.cancelled} Completed_status={self.completed} Payment_Status={self.paid}"
