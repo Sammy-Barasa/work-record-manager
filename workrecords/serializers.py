@@ -9,7 +9,7 @@ class WorkSerializer(serializers.ModelSerializer):
                   'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid']
         read_only_fields = ['id']
         # extra_kwargs = {'user': {'write_only': True}}
-        depth = 2
+        depth = 1
         # validate
         def validate(self, attr):
             return attr
@@ -31,6 +31,7 @@ class UpdateWorkSerializer(serializers.ModelSerializer):
                   'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid']
         read_only_fields = ['id', 'topic', 'date',
                              'assigned_by']
+        
         # validate
 
         def validate(self, attr):
@@ -40,9 +41,11 @@ class UpdateWorkSerializer(serializers.ModelSerializer):
 class CategoryOfWorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = TypeOfWorkChoices
-        fields = ['id', 'work_type']
+        fields = ['id','user','work_type']
         read_only_fields = ['id']
-
+        # extra_kwargs={
+        #     'user':{'write_only':True},
+        #     }
         # validate
 
         def validate(self, attr):
