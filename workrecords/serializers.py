@@ -8,7 +8,7 @@ class WorkSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'topic', 'assigned_by', 'category_of_work','order_number','pages', 'number_of_words',
                   'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid']
         read_only_fields = ['id']
-        extra_kwargs = {'user': {'write_only': True}}
+        # extra_kwargs = {'user': {'write_only': True}}
         depth = 2
         # validate
         def validate(self, attr):
