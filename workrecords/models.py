@@ -15,22 +15,22 @@ class PersonChoises(models.Model):
     phone= models.IntegerField(default="0700500600")
 
     def __str__(self):
-        return f"{self.user}-{self.name}"
+        return f"{self.name}--({self.user})"
     
 class TypeOfWorkChoices(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     work_type = models.CharField(max_length=200)
 
     def __str__(self):
-        return f"{self.user}-{self.work_type}"
+        return f"{self.work_type}"
     
 class Work(models.Model):
     
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     topic=models.CharField(max_length=200)
-    person=models.CharField(max_length=100)
-    type_of_work =models.CharField(default="Writing",
-        max_length=100)
+    person=models.CharField(max_length=100,blank=True)
+    type_of_work =models.CharField(
+        max_length=100,blank=True)
     pages=models.IntegerField(default=0)
     number_of_words=models.IntegerField()
     date=models.DateField(auto_now_add=True,editable=False)
