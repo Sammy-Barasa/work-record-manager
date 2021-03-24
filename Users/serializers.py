@@ -6,10 +6,9 @@ from django.contrib.auth import get_user_model
 class PersonSerializer(serializers.ModelSerializer):
     class Meta:
         model = PersonChoises
-        fields = ['id', 'user', 'name', 'email', 'phone']
+        fields = ['id','name', 'email', 'phone']
         read_only_fields = ['id']
-        extra_kwargs = {'user': {'write_only': True}}
-        depth = 2
+        
         # validate
 
         def validate(self, attr):
