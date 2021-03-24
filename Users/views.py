@@ -24,7 +24,7 @@ class UserWorksView(generics.GenericAPIView):
         id = self.kwargs['user_id']
         user = get_user_model().objects.get(pk=id)
         if user is not None:
-            return queryset.filter(user=user).order_by('-date')
+            return queryset.filter(user=user).order_by('-last_modified')
     
     def get(self,request,user_id):
         serializer = self.serializer_class(self.get_queryset(), many=True)
@@ -64,7 +64,7 @@ class UserPersonView(generics.GenericAPIView):
     # get person detail
     def get(self, request, personchoices_id):
         try:
-            serializer = self.serializer_class(self.get_queryset().filter(user=request.user))
+            serializer = self.serializer_class(self.get_queryset().filter(user=request.user),many=True)
             serializer.is_valid(raise_exception=True)
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         except ObjectDoesNotExist as error:

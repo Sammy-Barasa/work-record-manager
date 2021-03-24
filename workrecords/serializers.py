@@ -17,7 +17,9 @@ class WorkSerializer(serializers.ModelSerializer):
         # create
         def create(self, validated_data):
             user_id= validated_data.pop('user')
-            work= Work.objects.create(user=self.context['request'].user,**validated_data)
+            assigned_by_id = validated_data.pop('assigned_by')
+            category_of_work_id = validated_data.pop('category_of_work')
+            work= Work.objects.create(user=self.context['request'].user,assigned_by=assigned_by_id,category_of_work=category_of_work_id,**validated_data)
             record = RecordOfWork.objects.create(work=work)
             return work
 
