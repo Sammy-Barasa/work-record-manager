@@ -32,7 +32,7 @@ class PersonCreateSerializer(serializers.ModelSerializer):
         # create
         def create(self, validated_data):
             person = PersonChoises.objects.create(
-                user=self.context['request'].user, **validated_data)
+                user=self.context['request'].user,**validated_data)
             return person
 
 class PersonUpdateSerializer(serializers.ModelSerializer):
