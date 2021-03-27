@@ -84,8 +84,7 @@ class UserCreatePersonView(generics.GenericAPIView):
     def post(self, request, user_id):
         print(user_id)
         data = request.data
-        serializer = self.serializer_class(
-             data=data, context={'request': request})
+        serializer = self.serializer_class(data=data,context={'request': request})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         print(serializer.data)
