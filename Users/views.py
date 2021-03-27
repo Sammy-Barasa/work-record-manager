@@ -79,7 +79,7 @@ class UserPersonView(generics.GenericAPIView):
         print(user_id)
         data = request.data
         serializer = self.serializer_class(
-            self.get_queryset(), data=data, context={'request': request})
+             data=data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         print(serializer.data)
