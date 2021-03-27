@@ -4,7 +4,7 @@ from rest_framework import generics, status
 from workrecords.models import Work, PersonChoises
 from django.contrib.auth import get_user_model
 from workrecords.serializers import WorkSerializer, WorkCreateSerializer
-from Users.serializers import PersonSerializer, PersonUpdateSerializer
+from Users.serializers import PersonSerializer, PersonUpdateSerializer, PersonCreateSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
@@ -73,6 +73,12 @@ class UserPersonView(generics.GenericAPIView):
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         except ObjectDoesNotExist as error:
             return Response(data={"detail": error}, status=status.HTTP_404_OK)
+        
+        
+class UserCreatePersonView(generics.GenericAPIView):
+
+    permission_classes = (IsAuthenticated,)
+    serializer_class = PersonCreateSerializer
     # add person
 
     def post(self, request, user_id):
