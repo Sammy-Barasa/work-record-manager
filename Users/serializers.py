@@ -19,7 +19,21 @@ class PersonSerializer(serializers.ModelSerializer):
             person = PersonChoises.objects.create(
                 user=self.context['request'].user, **validated_data)
             return person
+class PersonCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PersonChoises
+        fields = ['name', 'email', 'phone']
+       
+        # validate
 
+        def validate(self, attr):
+            return attr
+
+        # create
+        def create(self, validated_data):
+            person = PersonChoises.objects.create(
+                user=self.context['request'].user, **validated_data)
+            return person
 
 class PersonUpdateSerializer(serializers.ModelSerializer):
     class Meta:
