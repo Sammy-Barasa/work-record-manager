@@ -16,7 +16,6 @@ class PersonSerializer(serializers.ModelSerializer):
 
         # create
         def create(self, validated_data):
-            user_id = validated_data.pop('user')
             person = PersonChoises.objects.create(
                 user=self.context['request'].user, **validated_data)
             return person
