@@ -15,8 +15,8 @@ class getStats:
     def calculate_stats(data):
         stats={}
         total = len(data)
-        paid_total =len([i for i in data if i.paid == True])
-        not_paid_total = len([i for i in data if i.paid == False])
+        paid_total =sum(i.get('paid')==True for i in data)
+        not_paid_total = sum(i.get('paid') == False for i in data)
         stats['total'] = total
         stats['paid_total'] =paid_total
         stats['not_paid_total'] = not_paid_total
