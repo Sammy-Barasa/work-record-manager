@@ -26,7 +26,7 @@ class UserWorksView(generics.GenericAPIView):
         id = self.kwargs['user_id']
         user = get_user_model().objects.get(pk=id)
         if user is not None:
-            return queryset.filter(user=user).order_by('last_modified')
+            return queryset.filter(user=user).order_by('-last_modified')
     
     def get(self,request,user_id):
         serializer = self.serializer_class(self.get_queryset(), many=True)
