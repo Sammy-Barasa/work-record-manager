@@ -9,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
 from django.db import DatabaseError
 from django.core.exceptions import ObjectDoesNotExist
+from Users.utils import StatisticThread, getStats
 # Create your views here.
 
 # create ,get work API viw
@@ -25,11 +26,16 @@ class UserWorksView(generics.GenericAPIView):
         id = self.kwargs['user_id']
         user = get_user_model().objects.get(pk=id)
         if user is not None:
-            return queryset.filter(user=user).order_by('-last_modified')
+            return queryset.filter(user=user).order_by('last_modified')
     
     def get(self,request,user_id):
         serializer = self.serializer_class(self.get_queryset(), many=True)
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+        scope={'hasNoList':False}
+        if len(serializer.data)==0:
+            scope['hasNoList']=True
+            stats={'total':0,'paid_total':0,'not_paid_total':0}
+        stats=StatisticThread(getStats.calculate_stats(serializer.data)).start()
+        return Response(data={'data':serializer.data,'scope':scope,'stats':stats}, status=status.HTTP_200_OK)
 
 
 class UserCreateWorksView(generics.GenericAPIView):
@@ -69,9 +75,13 @@ class UserPersonView(generics.GenericAPIView):
 
     # get person detail
     def get(self, request, user_id):
+        scope = {'hasNoList': False}
         try:
             serializer = self.serializer_class(self.get_queryset().filter(user=request.user),many=True)
-            return Response(data=serializer.data, status=status.HTTP_200_OK)
+            
+            if len(serializer.data) == 0:
+                scope['hasNoList'] = True
+            return Response(data={'data': serializer.data, 'scope': scope}, status=status.HTTP_200_OK)
         except ObjectDoesNotExist as error:
             return Response(data={"detail": error}, status=status.HTTP_404_OK)
         
@@ -83,7 +93,6 @@ class UserCreatePersonView(generics.GenericAPIView):
     # add person
 
     def post(self, request, user_id):
-        
         data = request.data
         serializer = self.serializer_class(
             data=data, context={'request': request})
