@@ -34,7 +34,7 @@ class UserWorksView(generics.GenericAPIView):
         if len(serializer.data)==0:
             scope['hasNoList']=True
             stats={'total':0,'paid_total':0,'not_paid_total':0}
-        stats=StatisticThread(getStats.calculate_stats(serializer.data)).start()
+        stats=getStats.calculate_stats(serializer.data)
         return Response(data={'data':serializer.data,'scope':scope,'stats':stats}, status=status.HTTP_200_OK)
 
 
