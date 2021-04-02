@@ -96,14 +96,13 @@ class UserCreatePersonView(generics.GenericAPIView):
         data = request.data
         serializer = self.serializer_class(
             data=data, context={'request': request})
-        serializer.is_valid(raise_exception=True)
-        try:
+        
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
             print(serializer.data)
             return Response(data={"message": "person has been created"}, status=status.HTTP_200_OK)
-        except DatabaseError as error:
-            print(error)
-            return Response(data={"message": error}, status=status.HTTP_400_BAD_REQUEST)
+        print(serializer.errors)
+        return Response(data={"message": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 class UserUpdatePersonView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)

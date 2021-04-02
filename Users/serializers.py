@@ -18,7 +18,7 @@ class PersonSerializer(serializers.ModelSerializer):
 class PersonCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = PersonChoises
-        fields = ['user','name', 'email', 'phone']
+        fields = ['name', 'email', 'phone']
        
         # validate
 
