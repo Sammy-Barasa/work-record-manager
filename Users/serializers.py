@@ -13,7 +13,7 @@ class PersonSerializer(serializers.ModelSerializer):
 
         def validate(self, attr):
             return attr
-
+            
         
 class PersonCreateSerializer(serializers.ModelSerializer):
     class Meta:
