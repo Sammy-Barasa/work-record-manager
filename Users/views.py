@@ -95,13 +95,13 @@ class UserCreatePersonView(generics.GenericAPIView):
     def post(self, request, user_id):
         data = request.data
         serializer = self.serializer_class(
-            data=data, context={'request': request})
+            data=data, context={'request': request,'userId':user_id})
         serializer.is_valid(raise_exception=True)
         try:
             serializer.save()
             print(serializer.data)
             return Response(data={"message": "person has been created"}, status=status.HTTP_200_OK)
-        except serializer.errors as error:
+        except ValidationError as error:
             return Response(data={"message": error}, status=status.HTTP_400_BAD_REQUEST)
 
 class UserUpdatePersonView(generics.RetrieveUpdateDestroyAPIView):
