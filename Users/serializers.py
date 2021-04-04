@@ -29,7 +29,7 @@ class PersonCreateSerializer(serializers.ModelSerializer):
         def create(self, validated_data):
             print(self.context['request'].user)
             person = PersonChoises.objects.create(
-                user=self.context['userId'], **validated_data)
+                 **validated_data)
             return person
 
 class PersonUpdateSerializer(serializers.ModelSerializer):

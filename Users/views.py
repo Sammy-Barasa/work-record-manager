@@ -98,7 +98,7 @@ class UserCreatePersonView(generics.GenericAPIView):
             data=data, context={'request': request,'userId':user_id})
         serializer.is_valid(raise_exception=True)
         try:
-            serializer.save()
+            serializer.save(user=request.user)
             print(serializer.data)
             return Response(data={"message": "person has been created"}, status=status.HTTP_200_OK)
         except ValidationError as error:
