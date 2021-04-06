@@ -72,7 +72,7 @@ class RegisterView(generics.GenericAPIView):
         data = {'subject': subject, 'body': body,
                 'to_email': validated_user.email}
         Utils.send_email(data=data)
-        return Response(user_data, status=status.HTTP_201_CREATED)
+        return Response(data={"message":"Account has been created"}, status=status.HTTP_201_CREATED)
 
 
 class VerifyEmailView(generics.GenericAPIView):
