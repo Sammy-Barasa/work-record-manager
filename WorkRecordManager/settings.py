@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'workrecords',
     'Users',
     'corsheaders',
+    'phone_field',
+    "fcm_django",
 ]
 
 MIDDLEWARE = [
@@ -92,6 +94,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'WorkRecordManager.wsgi.application'
 AUTH_USER_MODEL = 'authentication.User'
 
+FCM_DJANGO_SETTINGS = { 
+    "FCM_SERVER_KEY": os.environ.get("FCM_SERVER_KEY"),
+}
+# https://res.cloudinary.com/barasa/image/upload/v1617708961/maskable_icon_juflvc.png
+# https://res.cloudinary.com/barasa/image/upload/v1617708961/maskable_icon_juflvc.png
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

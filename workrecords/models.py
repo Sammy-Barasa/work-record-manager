@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from phone_field import PhoneField
 
 # Create your models here.
 #person choices to be personalised
@@ -12,7 +13,7 @@ class PersonChoises(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     email= models.EmailField(default="person@example.com", max_length=254)
-    phone= models.IntegerField(default="0700500600")
+    phone = PhoneField(blank=True, help_text='Contact phone number')
 
     def __str__(self):
         return f"{self.name}--({self.user})"
@@ -41,6 +42,7 @@ class Work(models.Model):
     paid=models.BooleanField(default=False)
     order_number = models.CharField(default="#00000",max_length=200)
     last_modified = models.DateTimeField(auto_now=True)
+    date_paid = models.DateTimeField(blank=True, null=True)
     
  
     def __str__(self):

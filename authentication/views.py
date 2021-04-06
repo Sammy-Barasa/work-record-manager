@@ -19,6 +19,7 @@ from drf_yasg import openapi
 from django.contrib.auth import authenticate
 import jwt
 from rest_framework.exceptions import AuthenticationFailed
+from fcm_django.models import FCMDevice
 
 
 # Create your views here.
@@ -37,9 +38,22 @@ class RegisterView(generics.GenericAPIView):
         user_data = serializer.validated_data
         # use saved email to send verifying link
         validated_user = User.objects.get(email=user_data['email'])
+
+        # if fcm_token, create FCMDevice
+        device = FCMDevice()
+        try:
+            fcm_token = user_data['fcm_token']
+            if fcm_token:
+                device.registration_id = fcm_token
+                device.type = "Android"
+                device.name = "Can be anything"
+                device.user = user
+                device.save()
+        except:
+            return
         # give user a token tto verify email
         tokens = validated_user.get_tokens_for_user()
-        print(tokens)
+        # print(tokens)
         accesstoken = tokens["access"]
         print("access: ", str(accesstoken))
         # link to verify API endpoint
@@ -52,8 +66,8 @@ class RegisterView(generics.GenericAPIView):
         print(verifylink)
         # constract the message
         subject = "Verify your Email"
-        body = "Hi,"+validated_user.username + \
-            ",NutriCalc wants to verify your email.use this link to do so.\n" + verifylink
+        body = "Hi, "+validated_user.username + \
+            ",WorkRecordManager wants to verify your email.use this link to do so.\n" + verifylink
         data = {'subject': subject, 'body': body,
                 'to_email': validated_user.email}
         Utils.send_email(data=data)
@@ -79,6 +93,17 @@ class VerifyEmailView(generics.GenericAPIView):
                 # set user is_verified status to True
                 user.is_verified = True
                 user.save()
+
+                from fcm_django.models import FCMDevice
+                devices = FCMDevice.objects.get(user=user.id)
+                try:
+                    title = "Work Record Manager"
+                    body =f"{user.username}, your email has been verified"
+                    icon = "https://res.cloudinary.com/barasa/image/upload/v1617708961/maskable_icon_juflvc.png"
+                    data = {"login via": "https://workrecordmanager.netlify.app/login"}
+                    devices.send_message(title=title, body=body,icon=icon)
+                except:
+                    return
                 return Response({"message": "user email is successfully verified","Login via":"https://workrecordmanager.netlify.app/login"}, status=status.HTTP_200_OK)
             return Response({"message", "email is already verified"}, status=status.HTTP_200_OK)
         except jwt.exceptions.DecodeError as identifier:
