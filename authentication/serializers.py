@@ -13,6 +13,11 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ['email', 'username', 'password','fcm_token']
+        extra_kwargs = {'fcm_token':{
+                                      'required':False,
+                                      'allow_null':True
+                                    }
+                       }
 
     def validate(self, attr):
         email = attr.get('email')
