@@ -41,17 +41,17 @@ class RegisterView(generics.GenericAPIView):
         validated_user = User.objects.get(email=user_data['email'])
 
         # if fcm_token, create FCMDevice
-        device = FCMDevice()
-        try:
-            fcm_token = user_data['fcm_token']
-            if fcm_token:
-                device.registration_id = fcm_token
-                device.type = "Android"
-                device.name = "Can be anything"
-                device.user = user
-                device.save()
-        except:
-            return
+#         device = FCMDevice()
+#         try:
+#             fcm_token = user_data['fcm_token']
+#             if fcm_token:
+#                 device.registration_id = fcm_token
+#                 device.type = "Android"
+#                 device.name = "Can be anything"
+#                 device.user = user
+#                 device.save()
+#         except:
+#             return
         # give user a token tto verify email
         tokens = validated_user.get_tokens_for_user()
         # print(tokens)
@@ -95,16 +95,16 @@ class VerifyEmailView(generics.GenericAPIView):
                 user.is_verified = True
                 user.save()
 
-                from fcm_django.models import FCMDevice
-                try:
-                    devices = FCMDevice.objects.get(user=user.id)
-                    title = "Work Record Manager"
-                    body =f"{user.username}, your email has been verified"
-                    icon = "https://res.cloudinary.com/barasa/image/upload/v1617708961/maskable_icon_juflvc.png"
-                    data = {"login via": "https://workrecordmanager.netlify.app/login"}
-                    devices.send_message(title=title, body=body,icon=icon)
-                except:
-                    return
+#                 from fcm_django.models import FCMDevice
+#                 try:
+#                     devices = FCMDevice.objects.get(user=user.id)
+#                     title = "Work Record Manager"
+#                     body =f"{user.username}, your email has been verified"
+#                     icon = "https://res.cloudinary.com/barasa/image/upload/v1617708961/maskable_icon_juflvc.png"
+#                     data = {"login via": "https://workrecordmanager.netlify.app/login"}
+#                     devices.send_message(title=title, body=body,icon=icon)
+#                 except:
+#                     return
                 return HttpResponseRedirect("https://workrecordmanager.netlify.app/login")
             return Response({"message", "email is already verified"}, status=status.HTTP_200_OK)
         except jwt.exceptions.DecodeError as identifier:
