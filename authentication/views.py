@@ -20,6 +20,7 @@ from django.contrib.auth import authenticate
 import jwt
 from rest_framework.exceptions import AuthenticationFailed
 from fcm_django.models import FCMDevice
+from django.http import HttpResponseRedirect
 
 
 # Create your views here.
@@ -95,8 +96,8 @@ class VerifyEmailView(generics.GenericAPIView):
                 user.save()
 
                 from fcm_django.models import FCMDevice
-                devices = FCMDevice.objects.get(user=user.id)
                 try:
+                    devices = FCMDevice.objects.get(user=user.id)
                     title = "Work Record Manager"
                     body =f"{user.username}, your email has been verified"
                     icon = "https://res.cloudinary.com/barasa/image/upload/v1617708961/maskable_icon_juflvc.png"
@@ -104,7 +105,7 @@ class VerifyEmailView(generics.GenericAPIView):
                     devices.send_message(title=title, body=body,icon=icon)
                 except:
                     return
-                return Response({"message": "user email is successfully verified","Login via":"https://workrecordmanager.netlify.app/login"}, status=status.HTTP_200_OK)
+                return HttpResponseRedirect("https://workrecordmanager.netlify.app/login")
             return Response({"message", "email is already verified"}, status=status.HTTP_200_OK)
         except jwt.exceptions.DecodeError as identifier:
             return Response({"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST)
