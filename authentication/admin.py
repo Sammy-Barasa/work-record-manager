@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from authentication.models import User
+from fcm_django.models import FCMDevice
 
 
 class UserAdmin(BaseUserAdmin):
@@ -21,4 +22,10 @@ class UserAdmin(BaseUserAdmin):
     filter_horizontal = ()
 
 
+class FCMDeviceAdmin(admin.ModelAdmin):
+    list_display = ['user', 'registration_id',
+                    'active', 'name', 'type', 'device_id']
+
+
 admin.site.register(User, UserAdmin)
+admin.site.register(FCMDevice, FCMDeviceAdmin)
