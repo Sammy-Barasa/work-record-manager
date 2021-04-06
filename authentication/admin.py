@@ -22,10 +22,12 @@ class UserAdmin(BaseUserAdmin):
     filter_horizontal = ()
 
 
-class FCMDeviceAdmin(admin.ModelAdmin):
-    list_display = ['user', 'registration_id',
-                    'active', 'name', 'type', 'device_id']
-
-
 admin.site.register(User, UserAdmin)
-admin.site.register(FCMDevice, FCMDeviceAdmin)
+
+# class FCMDeviceAdmin(admin.ModelAdmin):
+#     list_display = ['user', 'registration_id',
+#                     'active', 'name', 'type', 'device_id']
+
+
+
+# admin.site.register(FCMDevice, FCMDeviceAdmin)
