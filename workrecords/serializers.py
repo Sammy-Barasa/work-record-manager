@@ -19,7 +19,7 @@ class WorkCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
         fields = ['topic', 'assigned_by', 'category_of_work', 'order_number', 'pages', 'number_of_words',
-                  'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid', 'last_modified']
+                  'date','expected_amount', 'cancelled', 'completed', 'amount_received', 'paid', 'last_modified']
         
         # validate
 
