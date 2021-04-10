@@ -29,4 +29,4 @@ class TeamMembership(models.Model):
     date_joined = models.DateTimeField()
 
     def __str__(self):
-        return f"{self.writer_name} member of {self.team_name} joined in {self.date_joined}"
+        return f"{self.writer} member of {self.team} joined in {self.date_joined}"
