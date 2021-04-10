@@ -55,7 +55,8 @@ class UserCreateWorksView(generics.GenericAPIView):
             return Response(data={"message": "work has been added"}, status=status.HTTP_201_CREATED)
         except ValidationError as error:
             print(error)
-            return Response(data={"message": error}, status=status.HTTP_400_BAD_REQUEST)
+            print(serializer.errors)
+            return Response(data={"message": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
             
 class UserPersonView(generics.GenericAPIView):

@@ -32,7 +32,8 @@ class WorkCreateSerializer(serializers.ModelSerializer):
             assigned_by_id = validated_data.pop('assigned_by')
             category_of_work_id = validated_data.pop('category_of_work')
             work = Work.objects.create(
-                created_by=self.context['request'].user, assigned_to=self.context['request'].user, assigned_by=assigned_by_id, category_of_work=category_of_work_id, **validated_data)
+                created_by=self.context['request'].user, assigned_to=self.context['request'].user, 
+                assigned_by=assigned_by_id, category_of_work=category_of_work_id, **validated_data)
             return work
 
 class UpdateWorkSerializer(serializers.ModelSerializer):
