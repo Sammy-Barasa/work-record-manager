@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from workrecords.models import Work, RecordOfWork, TypeOfWorkChoices
+from workrecords.models import Work, TypeOfWorkChoices
 from django.contrib.auth import get_user_model
 
 class WorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
         fields = ['id','topic', 'assigned_by', 'category_of_work','order_number','pages', 'number_of_words',
-                  'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid','last_modified']
+                  'date', 'expected_amount', 'is_from_team', 'cancelled', 'completed', 'amount_received', 'paid', 'last_modified', 'date_paid']
         read_only_fields = ['id','last_modified']
         depth = 1
         # validate
@@ -18,7 +18,7 @@ class WorkSerializer(serializers.ModelSerializer):
 class WorkCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
-        fields = ['user', 'topic', 'assigned_by', 'category_of_work', 'order_number', 'pages', 'number_of_words',
+        fields = ['created_by', 'topic', 'assigned_to','assigned_by', 'category_of_work', 'order_number', 'pages', 'number_of_words',
                   'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid', 'last_modified','date_paid']
         
         # validate
@@ -32,7 +32,7 @@ class WorkCreateSerializer(serializers.ModelSerializer):
             assigned_by_id = validated_data.pop('assigned_by')
             category_of_work_id = validated_data.pop('category_of_work')
             work = Work.objects.create(
-                user=self.context['request'].user, assigned_by=assigned_by_id, category_of_work=category_of_work_id, **validated_data)
+                created_by=self.context['request'].user, assigned_to=self.context['request'].user, assigned_by=assigned_by_id, category_of_work=category_of_work_id, **validated_data)
             record = RecordOfWork.objects.create(work=work)
             return work
 
@@ -40,7 +40,7 @@ class UpdateWorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
         fields = ['id','topic', 'date','order_number', 'pages', 'number_of_words',
-                  'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid']
+                  'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid', 'date_paid']
         read_only_fields = ['id', 'topic', 'date']
         
         # validate

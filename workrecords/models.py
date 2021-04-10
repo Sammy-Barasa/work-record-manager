@@ -29,10 +29,9 @@ class TypeOfWorkChoices(models.Model):
 class Work(models.Model):
     
     created_by = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='owner',null=True, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+        User, on_delete=models.CASCADE, related_name='owner')
     assigned_to = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="given_to",null=True, blank=True)
+        User, on_delete=models.CASCADE, related_name="given_to")
     topic=models.CharField(max_length=200)
     assigned_by = models.ForeignKey(PersonChoises, on_delete=models.CASCADE,null=True, blank=True)
     is_from_team = models.ForeignKey(Team, on_delete=models.CASCADE,null=True,blank=True)
@@ -53,10 +52,7 @@ class Work(models.Model):
     
  
     def __str__(self):
-        return f"{self.user} {self.date} - {self.topic},{self.category_of_work} by {self.assigned_by} - {self.pages} pages, {self.number_of_words} words. Cancelled_status={self.cancelled} Completed_status={self.completed} Payment_Status={self.paid}"
+        return f"{self.created_by} {self.date} - {self.topic},{self.category_of_work} by {self.assigned_by} - {self.pages} pages, {self.number_of_words} words. Cancelled_status={self.cancelled} Completed_status={self.completed} Payment_Status={self.paid}"
     
-class RecordOfWork(models.Model):
-    work=models.ForeignKey(Work,on_delete=models.CASCADE)
-    def __str__(self):
-        return f"{self.work}"
+
 
