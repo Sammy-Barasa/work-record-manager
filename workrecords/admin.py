@@ -3,7 +3,7 @@ from workrecords.models import Work, RecordOfWork, PersonChoises, TypeOfWorkChoi
 
 # Register your models here.
 class WorkAdmin(admin.ModelAdmin):
-    list_display = ['id', 'topic', 'order_number','date', 'assigned_by', 'category_of_work','pages',
+    list_display = ['id', 'topic', 'order_number','date','created_by','assigned_by','assigned_to', 'category_of_work','pages',
                     'number_of_words', 'expected_amount', 'cancelled', 'completed', 'paid', 'amount_received', 'user', 'last_modified', 'date_paid']
     ordering = ['last_modified']
 

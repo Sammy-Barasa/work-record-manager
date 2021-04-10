@@ -15,7 +15,7 @@ class Team(models.Model):
         related_name='member_of_team',
         through_fields=('team', 'writer')
         )
-
+    date_created = models.DateField(auto_now_add=True,null=True,blank=True)
     def __str__(self):
         return f"{self.team_name} owned by,{self.owned_by}"
 
@@ -24,7 +24,7 @@ class TeamMembership(models.Model):
         Team, on_delete=models.CASCADE, related_name='team_owner')
     writer = models.ForeignKey(
         User, on_delete=models.CASCADE,related_name='team_writer')
-    date_invited = models.DateTimeField(auto_now=True)
+    date_invited = models.DateTimeField(auto_now_add=True)
     is_request_accepted = models.BooleanField(default=False)
     date_joined = models.DateTimeField()
 
