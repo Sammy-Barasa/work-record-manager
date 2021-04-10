@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'authentication',
     'workrecords',
     'Users',
+    'Teams',
     'corsheaders',
     'phone_field',
     "fcm_django",

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
 from rest_framework_simplejwt.tokens import RefreshToken
+from phone_field import PhoneField
 
 # Create your models here.
 
@@ -38,6 +39,10 @@ class User(AbstractUser):
     is_staff = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    phone = PhoneField(blank=True, help_text='Contact phone number')
+    mpesa_no = PhoneField(blank=True, help_text='Mpesa phone number')
+    is_writer = models.BooleanField(default=False)
+    is_team_manager = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']

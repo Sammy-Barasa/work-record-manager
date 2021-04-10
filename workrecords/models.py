@@ -27,9 +27,13 @@ class TypeOfWorkChoices(models.Model):
     
 class Work(models.Model):
     
+    created_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='owner',null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    assigned_to = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="given_to",null=True, blank=True)
     topic=models.CharField(max_length=200)
-    assigned_by = models.ForeignKey(PersonChoises, on_delete=models.CASCADE)
+    assigned_by = models.ForeignKey(PersonChoises, on_delete=models.CASCADE,null=True, blank=True)
     category_of_work = models.ForeignKey(
         TypeOfWorkChoices, on_delete=models.CASCADE)
     pages=models.IntegerField(default=0)
@@ -43,6 +47,7 @@ class Work(models.Model):
     order_number = models.CharField(default="#00000",max_length=200)
     last_modified = models.DateTimeField(auto_now=True)
     date_paid = models.DateTimeField(blank=True, null=True)
+    
     
  
     def __str__(self):
