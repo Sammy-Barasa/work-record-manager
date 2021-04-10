@@ -50,7 +50,8 @@ class UserCreateWorksView(generics.GenericAPIView):
         serializer = self.serializer_class(data=data,context={'request': request})
         serializer.is_valid(raise_exception=True)
         try:
-            serializer.save()
+            serializer.save(
+                created_by=request.user, assigned_to=request.user)
             print(serializer.data)
             return Response(data={"message": "work has been added"}, status=status.HTTP_201_CREATED)
         except ValidationError as error:
