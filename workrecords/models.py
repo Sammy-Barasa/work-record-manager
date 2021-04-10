@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from phone_field import PhoneField
+from Teams.models import Team
 
 # Create your models here.
 #person choices to be personalised
@@ -34,6 +35,7 @@ class Work(models.Model):
         User, on_delete=models.CASCADE, related_name="given_to",null=True, blank=True)
     topic=models.CharField(max_length=200)
     assigned_by = models.ForeignKey(PersonChoises, on_delete=models.CASCADE,null=True, blank=True)
+    is_from_team = models.ForeignKey(Team, on_delete=models.CASCADE,null=True,blank=True)
     category_of_work = models.ForeignKey(
         TypeOfWorkChoices, on_delete=models.CASCADE)
     pages=models.IntegerField(default=0)
