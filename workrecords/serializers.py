@@ -18,8 +18,8 @@ class WorkSerializer(serializers.ModelSerializer):
 class WorkCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
-        fields = ['created_by', 'topic', 'assigned_to','assigned_by', 'category_of_work', 'order_number', 'pages', 'number_of_words',
-                  'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid', 'last_modified','date_paid']
+        fields = ['topic', 'assigned_by', 'category_of_work', 'order_number', 'pages', 'number_of_words',
+                  'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid', 'last_modified']
         
         # validate
 
@@ -40,7 +40,7 @@ class UpdateWorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
         fields = ['id','topic', 'date','order_number', 'pages', 'number_of_words',
-                  'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid', 'date_paid']
+                  'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid']
         read_only_fields = ['id', 'topic', 'date']
         
         # validate
