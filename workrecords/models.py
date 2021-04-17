@@ -48,6 +48,7 @@ class Work(models.Model):
     order_number = models.CharField(default="#00000",max_length=200)
     last_modified = models.DateTimeField(auto_now=True)
     date_paid = models.DateTimeField(blank=True, null=True)
+    is_locked = models.BooleanField(default=False)
     
     
  

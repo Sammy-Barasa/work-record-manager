@@ -10,11 +10,11 @@ class WorkAdmin(admin.ModelAdmin):
 
 
 class PersonChoisesAdmin(admin.ModelAdmin):
-    list_display = ['user', 'name']
+    list_display = ['id','user', 'name']
 
 
 class TypeOfWorkChoicesAdmin(admin.ModelAdmin):
-    list_display = ['user', 'work_type']
+    list_display = ['id','user', 'work_type']
 
 admin.site.register(Work,WorkAdmin)
 admin.site.register(PersonChoises, PersonChoisesAdmin)
