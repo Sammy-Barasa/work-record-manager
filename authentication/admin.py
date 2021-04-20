@@ -32,13 +32,15 @@ class UserAdmin(BaseUserAdmin):
 
    
     def resend_confirmation_email(self,request,queryset):
-        user = User.objects.get_for_model(queryset.model)
+        user = queryset.values_list('id','email')
         # get user email
-        email = user.email
-        username = user.username
+        user_obj = User.objects.get(id=user[0][0])
+        email = user_obj.email
+        username = user_obj.username
 
+        print(user_obj)
         # generate token for user
-        tokens = user.get_tokens_for_user()
+        tokens = user_obj.get_tokens_for_user()
         accesstoken = tokens["access"]
 
         # chain email to email_veify endpoint
@@ -60,7 +62,8 @@ class UserAdmin(BaseUserAdmin):
 
         # send email
         Utils.send_email(data=data)
-        resend_confirmation_email.short_description = 'Resend or send confirmation email'
+
+    resend_confirmation_email.short_description = 'Resend or send confirmation email'
 
 
 
