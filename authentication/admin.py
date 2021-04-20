@@ -8,6 +8,10 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib import messages
 
 
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
 class UserAdmin(BaseUserAdmin):
     list_display = ('email', 'username', 'is_staff',
                     'is_verified', 'created_at')
@@ -28,12 +32,13 @@ class UserAdmin(BaseUserAdmin):
 
    
     def resend_confirmation_email(self,request,queryset):
+        user = User.objects.get_for_model(queryset.model)
         # get user email
-        email = queryset.email
-        username = queryset.username
+        email = user.email
+        username = user.username
 
         # generate token for user
-        tokens = queryset.get_tokens_for_user()
+        tokens = user.get_tokens_for_user()
         accesstoken = tokens["access"]
 
         # chain email to email_veify endpoint
