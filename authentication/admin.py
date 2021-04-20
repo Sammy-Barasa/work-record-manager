@@ -26,7 +26,7 @@ class UserAdmin(BaseUserAdmin):
     filter_horizontal = ()
     actions = ['resend_confirmation_email']
 
-    @admin.action(description='Resend or send confirmation email')
+   
     def resend_confirmation_email(self,request,queryset):
         # get user email
         email = queryset.email
@@ -55,6 +55,7 @@ class UserAdmin(BaseUserAdmin):
 
         # send email
         Utils.send_email(data=data)
+        resend_confirmation_email.short_description = 'Resend or send confirmation email'
 
 
 
