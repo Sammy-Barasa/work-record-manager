@@ -39,7 +39,7 @@ class Work(models.Model):
         TypeOfWorkChoices, on_delete=models.CASCADE)
     pages=models.IntegerField(default=0)
     number_of_words=models.IntegerField()
-    date=models.DateField(auto_now_add=True)
+    date=models.DateField(auto_now_add=True,editable=False)
     expected_amount = models.IntegerField(null=True, default=0, blank=True)
     cancelled=models.BooleanField(default=False)
     completed = models.BooleanField(default=True)
