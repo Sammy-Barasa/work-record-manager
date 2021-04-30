@@ -17,7 +17,7 @@ class PersonChoises(models.Model):
     phone = PhoneField(blank=True, help_text='Contact phone number')
 
     def __str__(self):
-        return f"{self.name}--({self.user})"
+        return f"{self.id}--{self.name}--({self.user})"
     
 class TypeOfWorkChoices(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
