@@ -3,6 +3,7 @@ from workrecords.models import Work, TypeOfWorkChoices
 from django.contrib.auth import get_user_model
 
 class WorkSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = Work
         fields = ['id','topic', 'assigned_by', 'category_of_work','order_number','pages', 'number_of_words',
@@ -16,6 +17,7 @@ class WorkSerializer(serializers.ModelSerializer):
 
 
 class WorkCreateSerializer(serializers.ModelSerializer):
+    order_number = serializers.CharField(required=False)
     class Meta:
         model = Work
         fields = ['topic', 'assigned_by', 'category_of_work', 'order_number', 'pages', 'number_of_words',
