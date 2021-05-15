@@ -42,7 +42,7 @@ class UpdateWorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
         fields = ['id','topic', 'date','order_number', 'pages', 'number_of_words',
-                  'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid']
+                  'date', 'expected_amount', 'cancelled', 'completed', 'amount_received', 'paid','date_paid']
         read_only_fields = ['id', 'topic', 'date']
         
         # validate
