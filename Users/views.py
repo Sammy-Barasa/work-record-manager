@@ -143,7 +143,7 @@ class UserUpdatePersonView(generics.RetrieveUpdateDestroyAPIView):
         return Response(data={"message": "person has been updated"}, status=status.HTTP_200_OK)
 
     # delete person
-    def delete(self, request, used_id,personchoices_id):
+    def delete(self, request, user_id,personchoices_id):
         person = self.get_queryset()
         operation = person.delete()
         if operation:
