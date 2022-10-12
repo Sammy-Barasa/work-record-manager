@@ -100,7 +100,7 @@ class UpdateWorkView(generics.RetrieveUpdateDestroyAPIView):
             return Response({"message": message}, status=status.HTTP_200_OK)
         return Response(data={"message": message}, status=status.HTTP_400_BAD_REQUEST)
     
- class TestGSM(generics.GenericAPIView):
+class TestGSM(generics.GenericAPIView):
     
     def get(self, request, **kwargs):
         return Response(data={"message":"from TestGsm"}, status=status.HTTP_200_OK)
