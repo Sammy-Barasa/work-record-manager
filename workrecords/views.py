@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import generics, status
+from rest_framework.views import APIView
 from workrecords.models import Work,TypeOfWorkChoices
 from django.contrib.auth import get_user_model
 from workrecords.serializers import UpdateWorkSerializer, WorkSerializer, CategoryOfWorkSerializer
@@ -100,7 +101,7 @@ class UpdateWorkView(generics.RetrieveUpdateDestroyAPIView):
             return Response({"message": message}, status=status.HTTP_200_OK)
         return Response(data={"message": message}, status=status.HTTP_400_BAD_REQUEST)
     
-class TestGSM(generics.GenericAPIView):
+class TestGSM(APIView):
     
     def get(self, request, **kwargs):
         return Response(data={"message":"from TestGsm"}, status=status.HTTP_200_OK)
