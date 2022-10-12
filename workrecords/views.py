@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import generics, status
 from workrecords.models import Work,TypeOfWorkChoices
 from django.contrib.auth import get_user_model
-from workrecords.serializers import UpdateWorkSerializer, WorkSerializer, CategoryOfWorkSerializer
+from workrecords.serializers import UpdateWorkSerializer, WorkSerializer, CategoryOfWorkSerializer, GSMSerializer
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
@@ -99,6 +99,21 @@ class UpdateWorkView(generics.RetrieveUpdateDestroyAPIView):
             message = f"work {work_id} has been deleted"
             return Response({"message": message}, status=status.HTTP_200_OK)
         return Response(data={"message": message}, status=status.HTTP_400_BAD_REQUEST)
+    
+ class TestGSM(generics.GenericAPIView):
+    
+    serializer_class = GSMSerializer
+
+    def get(self, request, **kwargs):
+        serializer = self.serializer_class()
+        print(serializer.data)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+    def post(self, request,**kwargs):
+        serializer = self.get_serializer_class(data=request.data,context={'request':request})
+        serializer.is_valid(raise_exception=True)
+        print(request.data)
+        Response(status=status..HTTP_200_OK)
+        
 
 
 # get personal person options
