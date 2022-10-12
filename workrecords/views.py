@@ -106,7 +106,7 @@ class TestGSM(generics.GenericAPIView):
         return Response(data={"message":"from TestGsm"}, status=status.HTTP_200_OK)
     def post(self, request,**kwargs):
         print(request.data)
-        Response(status=status..HTTP_200_OK)
+        return Response(status=status.HTTP_200_OK)
         
 
 
